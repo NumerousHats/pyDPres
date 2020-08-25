@@ -16,9 +16,9 @@ Instead, it is inspired by fixity tools such as "[fixity checker](https://github
 Preservation metadata is stored in an sqlite database file using a restricted subset of the PREMIS metadata schema.
 
 ## Installation
-`pip install git+git://github.com/openpreserve/fido.git#egg=fido` 
+`pip install git+git://github.com/NumerousHats/pyDPres.git` 
 
-(`pyDPres` requires a version of `fido` containing the bug fix [PR#136](https://github.com/openpreserve/fido/pull/136). As of 2018-12, this pull request has not been incorporated into a release, therefore installation of the latest master branch is required.)
+You will likely want to do this inside a virtual environment or use a tool such as `pipx`.
 
 To use the BWF bitstream ingest feature, the `bwfmetaedit` command line tool must also be installed.
 

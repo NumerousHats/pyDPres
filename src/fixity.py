@@ -8,7 +8,7 @@ import format_specific
 
 
 def check_object_fixity(premis_object):
-    logger = logging.getLogger("pyDPres")
+    logger = logging.getLogger(__name__)
     file = premis_object.contentLocationValue
     logger.debug("start fixity check of {}".format(file))
 

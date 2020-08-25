@@ -107,7 +107,7 @@ def cli(context, dbfile, quiet):
         logging_config['root']['handlers'] = handler_list
 
         dictConfig(logging_config)
-        logger = logging.getLogger("pyDPres")
+        logger = logging.getLogger(__name__)
 
         if dbfile:
             if not os.path.isfile(dbfile):
@@ -221,7 +221,7 @@ def ingest(context, paths, dry_run, stdin, note):
     if fido_out.returncode != 0:
         raise click.ClickException("You must install the current master branch of 'fido' from Github to run ingests.")
 
-    logger = logging.getLogger("pyDPres")
+    logger = logging.getLogger(__name__)
     db_session = context.obj["db_session"]
 
     if stdin:  # TODO
@@ -274,7 +274,7 @@ def fixity(context, age):
 
     db_session = context.obj["db_session"]
 
-    logger = logging.getLogger("pyDPres")
+    logger = logging.getLogger(__name__)
     logger.info("starting fixity run")
 
     if age is None:

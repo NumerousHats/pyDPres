@@ -71,7 +71,7 @@ class Checksums:
 
 
 def ingest_file(file, db_session, ingest_record, partition_type):
-    logger = logging.getLogger("pyDPres")
+    logger = logging.getLogger(__name__)
 
     filepath = os.fspath(file)
     filename = str(file.name)

@@ -40,7 +40,7 @@ def ingest_wave(file_object, session):
     if file_object.formatRegistryKey not in wave_file_keys:
         return
 
-    logger = logging.getLogger("pyDPres")
+    logger = logging.getLogger(__name__)
     logger.info('beginning bitstream ingest of %s', file_object.originalName)
 
     file = file_object.contentLocationValue
@@ -134,7 +134,7 @@ def ingest_wave(file_object, session):
 
 
 def fixity_wave(file_object):
-    logger = logging.getLogger("pyDPres")
+    logger = logging.getLogger(__name__)
     file = file_object.contentLocationValue
 
     try:

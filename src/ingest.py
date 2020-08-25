@@ -70,11 +70,15 @@ class Checksums:
         )
 
 
-def ingest_file(file, db_session, ingest_record, partition_type):
+def ingest_file(file, db_session, ingest_record, partition_type, update):
     logger = logging.getLogger(__name__)
 
     filepath = os.fspath(file)
     filename = str(file.name)
+
+    if update:
+        # TODO if file record already exists, then update existing data and don't try to create a new record
+        pass
 
     file_object = db_classes.PremisObject(
         contentLocationValue=filepath,

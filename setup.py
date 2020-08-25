@@ -9,6 +9,7 @@ setup(
         'Click',
         'appdirs',
         'sqlalchemy',
+        'opf-fido',
     ],
     entry_points='''
         [console_scripts]

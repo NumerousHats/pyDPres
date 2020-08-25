@@ -201,8 +201,9 @@ def configure(context):
 @click.option('--dry-run', is_flag=True, help="List files without actually ingesting them")
 @click.option('--stdin', is_flag=True, help="Read filenames from STDIN")
 @click.option('--note', help="Optional description of ingest")
+@click.option('--update', is_flag=True, help="Update metadata of files that have already been previously ingested")
 @click.pass_context
-def ingest(context, paths, dry_run, stdin, note):
+def ingest(context, paths, dry_run, stdin, note, update):
     """
     Ingest files for preservation
     """
@@ -218,15 +219,15 @@ def ingest(context, paths, dry_run, stdin, note):
     except FileNotFoundError:
         raise click.ClickException("External program 'fido' not found. You will not be able to run ingests.")
 
-    if fido_out.returncode != 0:
-        raise click.ClickException("You must install the current master branch of 'fido' from Github to run ingests.")
-
     logger = logging.getLogger(__name__)
     db_session = context.obj["db_session"]
 
     if stdin:  # TODO
         click.echo("`--stdin` option is not yet implemented")
         return
+
+    if update:
+        click.echo("`--update` functionality is not yet implemented")
 
     ingest_record = db_classes.PyDPresIngest(ingest_start_time=datetime.now())
     if note:
@@ -242,7 +243,7 @@ def ingest(context, paths, dry_run, stdin, note):
                         click.echo(os.fspath(filepath))
                     else:
                         try:
-                            ingest_file(filepath, db_session, ingest_record, context.obj["partition_type"])
+                            ingest_file(filepath, db_session, ingest_record, context.obj["partition_type"], update)
                             ingest_record.ingest_end_time = datetime.now()
                             db_session.commit()
                         except DuplicateIngestError:
@@ -309,6 +310,40 @@ def fixity(context, age):
 def report(context, outfile):
     """
     Export metadata and fixity information to a CSV file
+    """
+
+    if not context.obj["has_config"]:
+        raise click.ClickException("Improper configuration detected. Run 'pyDPres configure' to set up.")
+
+    db_session = context.obj["db_session"]
+
+    click.echo("not yet implemented")  # TODO
+
+
+@cli.command()
+@click.pass_context
+def summary(context):
+    """
+    Summarize vital statistics about the files under digital preservation
+    """
+
+    if not context.obj["has_config"]:
+        raise click.ClickException("Improper configuration detected. Run 'pyDPres configure' to set up.")
+
+    db_session = context.obj["db_session"]
+
+    # output something along the lines of: num of files ingested, last ingest datetime, oldest current fixity
+    # run, newest current fixity run, summary of fixity failures
+
+    click.echo("not yet implemented")  # TODO
+
+
+@cli.command()
+@click.pass_context
+@click.argument('filepath', nargs=-1)
+def delete(context, filepath):
+    """
+    Mark that a file has been deleted
     """
 
     if not context.obj["has_config"]:
